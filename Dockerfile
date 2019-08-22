@@ -21,4 +21,4 @@ RUN \
   && apk upgrade \
   && apk add --no-cache git yarn
 RUN \
-  yarn global add firebase-admin firebase-functions firebase-tools
+  yarn global add firebase-functions@latest firebase-admin@latest firebase-tools@latest
