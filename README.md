@@ -32,9 +32,9 @@ docker tag roalcantara/node-yarn-firebase roalcantara/node-yarn-firebase:v.0.0
 docker push roalcantara/node-yarn-firebase
 ```
 
-## Firebase CI with GitHub Actions
+## Automate your Firebase's CI with [GitHub Actions](https://github.com/features/actions)
 
-Use GitHub Actions to deploy a Firebase project
+Use [GitHub Actions](https://github.com/features/actions) to deploy a [Firebase Project](https://firebase.google.com/docs/functions/get-started).
 
 ### Prerequisites
 
@@ -42,26 +42,45 @@ Use GitHub Actions to deploy a Firebase project
 - yarn
 - docker
 
-#### Firebase
+#### Create a [Firebase's](https://firebase.google.com/docs/functions/get-started) Project
 
-- Create Firebase project
+Cloud Functions for Firebase let you automatically run backend code in response to events triggered by Firebase features and HTTPS requests.
 
-#### Firebase token
+- Follow the steps on the [Get Started](https://firebase.google.com/docs/functions/get-started) tutorial
+- Run `yarn global add firebase-tools` to install firebase-tools locally
+- Run `firebase login` to log in via the browser and authenticate the firebase tool
+- Go to your Firebase project directory
+- Run `firebase init functions`
 
-- Install firebase-tools locally `yarn global add firebase-tools`
-- Get the `$FIREBASE_TOKEN` on firebasetool by running: `firebase login:ci`
+#### [Firebase Token](https://firebase.google.com/docs/cli#admin-commands)
 
-#### Secrets (Environment variables)
+Generate an authentication token for use in non-interactive environments.
 
-- Add the generated Firebase Token to GitHub Secrets `(Settings > Add a new secret)` with variable name `FIREBASE_TOKEN`
-- Add the Firebase's Project Name to GitHub Secrets `(Settings > Add a new secret)` with variable name `FIREBASE_PROJECT_NAME`
+- Get the `$FIREBASE_TOKEN` on firebase-tools by running: `firebase login:ci`
 
-#### Actions configuration
+#### [GitHub Secrets (Environment variables)](https://help.github.com/en/articles/virtual-environments-for-github-actions#creating-and-using-secrets-encrypted-variables)
 
-- Go to `GitHub > Actions > Setup a new workflow yourself`
+Secrets are encrypted environment variables created in a repository and can only be used by GitHub Actions.
+
+- On GitHub, navigate to the main page of the repository
+- Under your repository name, click `[Settings]`
+- In the left sidebar, click `[Secrets]`
+- Click on `[Add a new secret]` and add the generated Firebase Token with the name `FIREBASE_TOKEN`
+- Click on `[Add a new secret]` and add the Firebase's Project Name with the name `FIREBASE_PROJECT_NAME`
+
+#### [GitHub Actions Configuration](https://help.github.com/en/articles/about-github-actions)
+
+GitHub Actions enables you to create custom software development lifecycle workflows directly in your GitHub repository.
+
+- On GitHub, navigate to the main page of the repository
+- Under your repository name, click `[Actions]`
+- Find the `"Popular continuous integration workflows"` section
+- Find the `"Node.js"` workflow
+- Click on `"Set up this workflow"`
+- On `Edit new file` paste
 
 ```yml
-name: Deploy to Production
+name: Deploy to Firebase
 
 on:
   pull_request:
@@ -69,17 +88,16 @@ on:
     - master
 jobs:
   setup:
-    runs-on: ubuntu-latest
     steps:
-    - uses: docker://ntwob/node-yarn-firebase
     - name: Use node-yarn-firebase Doker
+    - uses: docker://roalcantara/node-yarn-firebase
   build:
     needs: setup
     steps:
     - name: install
       run: yarn install
     - name: lint
-      run: yarn lint:prod
+      run: yarn lint
     - name: test
       run: yarn test
     - name: build
@@ -96,8 +114,8 @@ jobs:
 
 #### Conclusion
 
-And now every commit pushed to `master` branch will build, lint, test and deploy your changes to Firebase
+And now every commit pushed to `master` will build, lint, test and deploy the changes to Firebase.
 
 ## Acknowledgments
 
-- Heavily inspired on (excellet!) the work of [roalcantara](https://github.com/roalcantara/node-yarn-firebase-docker)
+- Heavily inspired on (excellet!) the work of [bartholomej](https://github.com/bartholomej/angular-firebase-docker).
