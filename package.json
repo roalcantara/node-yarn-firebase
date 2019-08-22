@@ -1,6 +1,6 @@
 {
   "name": "node-yarn-firebase",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "roalcantara <rogerio.alcantara@gmail.com>",
   "description": "Lightweight Docker image based on NodeJS 8 with Yarn and Firebase Admin, Functions and Tools.",
   "scripts": {
