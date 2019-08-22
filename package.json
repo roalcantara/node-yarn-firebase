@@ -1,0 +1,31 @@
+{
+  "name": "node-yarn-firebase",
+  "version": "0.1.0",
+  "author": "roalcantara <rogerio.alcantara@gmail.com>",
+  "description": "Lightweight Docker image based on NodeJS 8 with Yarn and Firebase Admin, Functions and Tools.",
+  "scripts": {
+    "version": "",
+    "postversion": "git push && git push --follow-tags",
+    "release:patch": "git checkout master && npm version patch -m \"chore(update): patch release %s 🐛 \"",
+    "release:minor": "git checkout master && npm version minor -m \"chore(update): release %s 🚀\"",
+    "release:major": "git checkout master && npm version major -m \"chore(update): major release %s 💥 \""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roalcantara/node-yarn-firebase.git"
+  },
+  "keywords": [
+    "firebase",
+    "docker"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roalcantara/node-yarn-firebase/issues"
+  },
+  "homepage": "https://github.com/roalcantara/node-yarn-firebase#readme",
+  "dependencies": {
+    "firebase-admin": "^8.3.0",
+    "firebase-functions": "^3.2.0",
+    "firebase-tools": "^7.2.0"
+  }
+}
